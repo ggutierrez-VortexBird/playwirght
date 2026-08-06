@@ -200,6 +200,22 @@ Para todo lo relacionado con **UI / visual** de esta app, el archivo **`./acta-m
 >
 > El proceso de Vorkan termina en el paso 8 (VERIFIER limpio) más el aviso *"ya está todo listo"*. El commit/merge (paso 9) **solo se ejecuta después de tu "sí"** en la compuerta manual.
 
+## Regla de integridad
+
+> **Al finalizar cada HU, el orquestador hace commit y push de todo.**
+>
+> Una HU no se considera cerrada hasta que todo el código, los artefactos SDD (specs, diseño, tareas, verificación) y el estado del repo queden persistidos en Git. Esto garantiza que:
+> - `develop` siempre refleje el estado real del proyecto.
+> - Cualquier miembro del equipo pueda clonar y tener la última HU validada.
+> - No haya trabajo "flotando" sin versionar entre sesiones.
+>
+> El flujo de cierre incluye:
+> 1. Commit de todos los cambios de la feature branch.
+> 2. Squash-merge a `develop`.
+> 3. Commit del merge y de los artefactos SDD archivados.
+> 4. **Push de `develop` al remoto** (si existe).
+> 5. Confirmación de working tree limpio antes de cortar la siguiente rama.
+
 ## Prompt diario
 
 Para lanzar una nueva HU basta con decir:
