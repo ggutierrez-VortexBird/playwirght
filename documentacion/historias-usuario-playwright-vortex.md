@@ -4,6 +4,8 @@ Formato: historia + criterios de aceptación en Dado / Cuando / Entonces.
 
 > **Nota sobre el alcance del MVP:** la vista "Grabador" del mockup (`acta-mockups.html` → pantalla 2) **es aspiracional, no parte del MVP**. El MVP trabaja sobre el archivo `.spec.ts` ya escrito por el equipo; la UI para grabar visualmente queda como fase futura. Esta nota alinea el alcance con el principio de "cargar el caso directamente, sin sistema intermedio" — la plataforma no pretende ser un IDE de Playwright.
 
+> **Patrón de UI para todas las entidades jerárquicas:** cada entidad que pertenezca a una jerarquía (proyecto → caso → ejecución, proyecto → credencial) debe seguir el patrón dual de navegación: (1) **pestaña global propia** en el sidebar con listado completo, agrupado por entidad padre, y CRUD completo (crear con selector de padre, editar inline, eliminar); y (2) **gestión desde el contexto del padre** con navegación "Ver {hijos}" y CRUD inline. Este patrón se aplica aunque no se mencione explícitamente en cada HU.
+
 ---
 
 ## Fase 0 — Fundamentos
@@ -85,6 +87,8 @@ Para tener un catálogo ordenado de mis pruebas sin pasar por un sistema interme
 - Dado que completo código, nombre, script asociado y responsable, cuando guardo, entonces el caso aparece en el listado del proyecto con estado "sin ejecuciones".
 - Dado que el script indicado no existe o no es accesible, cuando intento guardar, entonces veo un error explícito antes de que el caso quede registrado.
 - Dado un código de caso ya usado en el mismo proyecto, cuando intento registrar otro caso con ese mismo código, entonces el sistema lo rechaza (el código es único por proyecto).
+- Dado que estoy en la pestaña global **"Casos"** (`/casos`), cuando creo un caso, entonces puedo seleccionar el proyecto al que pertenece y el caso aparece en el listado global agrupado por proyecto.
+- Dado un caso existente, cuando estoy en `/casos` o en la lista de casos de un proyecto, entonces puedo editar su código, nombre, script o responsable inline y eliminarlo (soft-delete).
 
 **HU-2.4 — Ver listado de casos de prueba de un proyecto**
 Como usuario superadministrador
@@ -94,6 +98,9 @@ Para saber de un vistazo el estado general de las pruebas de ese proyecto.
 *Criterios de aceptación:*
 - Dado un proyecto con casos que nunca se han ejecutado, cuando veo el listado, entonces esos casos muestran un estado neutro ("sin ejecutar"), no un falso "pasó" o "falló".
 - Dado un proyecto con casos ya ejecutados, cuando veo el listado, entonces cada caso muestra el resultado y la fecha de su ejecución más reciente.
+- Dado que estoy en la pestaña global **"Casos"** (`/casos`), cuando consulto el listado, entonces veo todos los casos activos agrupados por proyecto, con su código, responsable, resultado de última ejecución y fecha.
+- Dado la pestaña global `/casos`, cuando creo un caso, entonces puedo seleccionar el proyecto al que pertenece.
+- Dado un caso en cualquier listado (proyecto o `/casos`), cuando hago hover, entonces aparecen las acciones editar y eliminar (inline).
 
 **HU-2.5 — Identidad visual del espacio en toda la UI**
 Como usuario superadministrador
@@ -136,6 +143,7 @@ Para correr la prueba real sin usar la interfaz nativa de Playwright.
 - Dado un caso de prueba registrado, cuando presiono "ejecutar", entonces se crea una ejecución en estado "pendiente" y la petición responde de inmediato (sin esperar a que termine la prueba).
 - Dado que la ejecución pasa a "corriendo", cuando actualizo la vista, entonces veo el estado cambiar sin recargar manualmente.
 - Dado que la ejecución termina, cuando reviso su estado, entonces refleja correctamente "pasó" o "falló" según el resultado real de Playwright.
+- Dado que estoy en la pestaña global **"Ejecuciones"** (`/ejecuciones`), cuando consulto el historial, entonces veo todas las ejecuciones agrupadas por proyecto, con su caso, estado, resultado y fecha.
 
 **HU-3.2 — Evitar ejecuciones simultáneas del mismo caso**
 Como usuario superadministrador
@@ -271,6 +279,8 @@ Para tener a mano los accesos necesarios para las pruebas de ese proyecto.
 - Dado una credencial guardada, cuando la veo en el listado de su proyecto, entonces se muestra su nombre y tipo, su estado de sesión (activa con vencimiento / requiere ingreso) y los botones "Renovar" o "Iniciar sesión", pero no su valor.
 - Dado una credencial con sesión activa, cuando pasan los minutos configurados sin renovación, entonces la sesión expira y la credencial vuelve al estado "Requiere ingreso".
 - Dado que dos proyectos son de clientes distintos, cuando listo las credenciales de uno, entonces ninguna credencial del otro aparece (ni como referencia, ni como opción, ni siquiera como existente — el aislamiento es total).
+- Dado que estoy en la pestaña global **"Credenciales"** (`/credenciales`), cuando creo una credencial, entonces puedo seleccionar el proyecto al que pertenece y la credencial aparece en el listado global agrupado por proyecto.
+- Dado una credencial en cualquier listado (proyecto o `/credenciales`), cuando hago hover, entonces aparecen las acciones editar y eliminar (inline).
 
 **HU-7.2 — No exponer contraseñas en la interfaz ni en el acta**
 Como usuario superadministrador
