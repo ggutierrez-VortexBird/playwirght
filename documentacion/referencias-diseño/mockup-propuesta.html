@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vorTest — Propuesta de rediseño (Fase 1, mockup estático)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ---- Ancla de marca: SIN CAMBIOS respecto al valor hex actual ---- */
+    --navy: #131B2E;
+    --navy-2: #1B2438;
+    --navy-ink: #7C839B;
+
+    /* ---- Acento existente (ámbar), reutilizado con más intención ---- */
+    --amber: #FEA619;
+    --amber-ink: #855300;
+
+    /* ---- Semánticos nuevos, calibrados para convivir con el navy ---- */
+    --success: #12805C;
+    --success-bg: #E4F5EE;
+    --danger: #BA1A1A;
+    --danger-bg: #FCE8E6;
+    --info: #2F5FBD;
+    --info-bg: #E9EEFB;
+    --warn-bg: #FFF3DF;
+
+    /* ---- Neutros claros ---- */
+    --bg: #F7F9FB;
+    --surface: #FFFFFF;
+    --border: rgba(19,27,46,0.09);
+    --border-strong: rgba(19,27,46,0.16);
+    --ink: #191C1E;
+    --ink-soft: #55606E;
+    --ink-faint: #8892A0;
+
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 2px rgba(19,27,46,0.04), 0 8px 24px -12px rgba(19,27,46,0.18);
+  }
+
+  [data-theme="dark"]{
+    --bg: #0E1420;
+    --surface: #161D2C;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.14);
+    --ink: #EDEFF3;
+    --ink-soft: #A7AFBD;
+    --ink-faint: #6E7686;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,sans-serif;
+    background:#e4e8ee;
+    color:var(--ink);
+    padding:32px 24px 80px;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- página de presentación de la propuesta ---------- */
+  .intro{
+    max-width:980px;
+    margin:0 auto 40px;
+  }
+  .intro h1{
+    font-size:28px;
+    letter-spacing:-0.02em;
+    margin:0 0 6px;
+    color:var(--navy);
+  }
+  .intro p{
+    font-size:14.5px;
+    line-height:1.6;
+    color:#3B4454;
+    max-width:760px;
+  }
+  .intro .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--navy);
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    padding:5px 12px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:18px;
+  }
+  .legend span{
+    font-size:12.5px;
+    background:#fff;
+    border:1px solid #d7ddE6;
+    padding:6px 12px;
+    border-radius:999px;
+    color:#3B4454;
+  }
+  .legend b{color:var(--navy);}
+
+  .tabs{
+    max-width:980px;
+    margin:0 auto 24px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .tabs button{
+    font:inherit;
+    font-weight:600;
+    font-size:13px;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1px solid #d7ddE6;
+    background:#fff;
+    color:#3B4454;
+    cursor:pointer;
+  }
+  .tabs button.active{
+    background:var(--navy);
+    color:#fff;
+    border-color:var(--navy);
+  }
+  .tabs .theme-toggle{
+    margin-left:auto;
+    background:var(--amber);
+    color:#3a2500;
+    border-color:var(--amber);
+  }
+
+  .frame-wrap{
+    max-width:1480px;
+    margin:0 auto;
+    display:flex;
+    justify-content:center;
+  }
+  .device{
+    display:none;
+    background:#000;
+    border-radius:28px;
+    padding:14px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.35);
+  }
+  .device.active{display:block;}
+  .screen{
+    overflow:hidden;
+    border-radius:16px;
+    background:var(--bg);
+    position:relative;
+  }
+  #view-desktop .screen{width:1280px;height:800px;}
+  #view-tablet .screen{width:820px;height:900px;}
+  #view-mobile .screen{width:390px;height:844px;}
+
+  /* ========================================================
+     APP SHELL
+     ======================================================== */
+  .shell{
+    display:flex;
+    height:100%;
+    width:100%;
+    font-size:14px;
+    color:var(--ink);
+  }
+
+  /* ---- Sidebar: se conserva como nav principal, cambia su piel ---- */
+  .rail{
+    background:var(--navy);
+    color:#fff;
+    flex:0 0 auto;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .rail.rail-full{width:240px;padding:20px 14px;}
+  .rail.rail-icon{width:76px;padding:20px 12px;align-items:center;}
+  .rail-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 6px 20px;
+  }
+  .rail-full .rail-logo svg{width:132px;height:auto;}
+  .rail-icon .rail-logo svg{width:34px;height:auto;}
+  .rail-tag{
+    font-size:11px;
+    color:var(--navy-ink);
+    margin-top:2px;
+    letter-spacing:.01em;
+  }
+  .nav{display:flex;flex-direction:column;gap:3px;flex:1;}
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 12px;
+    border-radius:12px;
+    color:#B7BEDA;
+    font-weight:500;
+    font-size:13.5px;
+    cursor:pointer;
+  }
+  .rail-icon .nav-item{justify-content:center;padding:12px;}
+  .nav-item .ic{
+    width:20px;height:20px;flex:0 0 20px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .nav-item.active{
+    background:rgba(255,255,255,0.10);
+    color:#fff;
+  }
+  .nav-item:hover:not(.active){background:rgba(255,255,255,0.05);color:#fff;}
+  .rail-footer{
+    border-top:1px solid rgba(255,255,255,0.10);
+    padding-top:14px;
+    margin-top:10px;
+  }
+  .proj-pill{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:12px;
+    padding:10px 12px;
+    font-size:12.5px;
+    color:#D6DAEE;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .collapse-btn{
+    position:absolute;
+    top:20px;right:-12px;
+    width:24px;height:24px;
+    border-radius:999px;
+    background:#fff;
+    color:var(--navy);
+    border:1px solid var(--border-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;
+    cursor:pointer;
+  }
+
+  /* drawer (mobile) */
+  .drawer-scrim{
+    position:absolute;inset:0;
+    background:rgba(10,14,22,0.55);
+    z-index:5;
+  }
+  .rail.rail-drawer{
+    position:absolute;
+    top:0;left:0;bottom:0;
+    width:248px;
+    z-index:6;
+    box-shadow:20px 0 40px rgba(0,0,0,0.35);
+  }
+
+  /* ---- Área principal ---- */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .topbar{
+    height:64px;flex:0 0 auto;
+    display:flex;align-items:center;gap:14px;
+    padding:0 24px;
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+  }
+  .hamburger{
+    width:36px;height:36px;border-radius:10px;
+    border:1px solid var(--border-strong);
+    display:flex;align-items:center;justify-content:center;
+    background:transparent;color:var(--ink);cursor:pointer;
+    flex:0 0 auto;
+  }
+  .crumbs{font-size:13px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;}
+  .crumbs b{color:var(--ink);font-weight:600;}
+  .search{
+    flex:1;max-width:320px;
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:8px 14px;
+    color:var(--ink-faint);
+    font-size:13px;
+  }
+  .topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+  .icon-btn{
+    width:36px;height:36px;border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-soft);cursor:pointer;
+    position:relative;
+  }
+  .icon-btn .dot{
+    position:absolute;top:6px;right:6px;
+    width:7px;height:7px;border-radius:999px;
+    background:var(--danger);
+  }
+  .avatar{
+    width:36px;height:36px;border-radius:10px;
+    background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:13px;
+    cursor:pointer;
+  }
+
+  .content{flex:1;overflow:auto;padding:24px;}
+  .content.tight{padding:16px;}
+
+  .greet{margin-bottom:20px;}
+  .greet h1{font-size:24px;margin:0 0 4px;letter-spacing:-0.01em;}
+  .greet p{margin:0;color:var(--ink-faint);font-size:13.5px;}
+
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:16px;
+  }
+  #view-tablet .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  #view-mobile .kpi-grid{grid-template-columns:1fr;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+  }
+  .kpi{padding:16px 18px;}
+  .kpi .lbl{font-size:12.5px;color:var(--ink-faint);margin-bottom:8px;}
+  .kpi .val{font-size:26px;font-weight:700;letter-spacing:-0.02em;}
+  .trend{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:11.5px;font-weight:600;
+    padding:3px 8px;border-radius:999px;
+    margin-top:8px;
+  }
+  .trend.up{background:var(--success-bg);color:var(--success);}
+  .trend.down{background:var(--danger-bg);color:var(--danger);}
+
+  .row2{
+    display:grid;
+    grid-template-columns:1.6fr 1fr;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  #view-tablet .row2, #view-mobile .row2{grid-template-columns:1fr;}
+
+  .panel{padding:18px 20px;}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .panel-head h3{font-size:14.5px;margin:0;}
+  .panel-head span{font-size:12px;color:var(--ink-faint);}
+
+  .chart{
+    height:150px;
+    display:flex;align-items:flex-end;gap:8px;
+  }
+  .chart i{
+    flex:1;border-radius:6px 6px 2px 2px;
+    background:linear-gradient(180deg, var(--amber), rgba(254,166,25,0.25));
+  }
+
+  .activity-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 0;
+    border-bottom:1px solid var(--border);
+    font-size:13px;
+  }
+  .activity-item:last-child{border-bottom:none;}
+  .dotmark{width:8px;height:8px;border-radius:999px;flex:0 0 8px;}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{
+    text-align:left;font-weight:600;color:var(--ink-faint);
+    font-size:11.5px;padding:0 10px 10px;
+    border-bottom:1px solid var(--border);
+  }
+  tbody td{padding:12px 10px;border-bottom:1px solid var(--border);}
+  tbody tr:last-child td{border-bottom:none;}
+  .badge{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11.5px;font-weight:600;
+    padding:4px 10px;border-radius:999px;
+  }
+  .b-paso{background:var(--success-bg);color:var(--success);}
+  .b-fallo{background:var(--danger-bg);color:var(--danger);}
+  .b-corriendo{background:var(--warn-bg);color:var(--amber-ink);}
+  .b-pendiente{background:var(--info-bg);color:var(--info);}
+  .b-reparado{background:#EFEAFB;color:#6741C9;}
+  .pulse{
+    width:6px;height:6px;border-radius:999px;background:var(--amber-ink);
+    animation:pulse 1.4s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .notes{
+    max-width:980px;margin:28px auto 0;
+    background:#fff;border:1px solid #d7ddE6;border-radius:16px;
+    padding:18px 22px;font-size:13px;color:#3B4454;line-height:1.6;
+  }
+  .notes h4{margin:0 0 8px;color:var(--navy);font-size:13.5px;}
+</style>
+</head>
+<body>
+
+<div class="intro">
+  <span class="tag">Fase 1 · Mockup estático, no funcional</span>
+  <h1>vorTest — propuesta de rediseño visual</h1>
+  <p>
+    Este archivo es solo una vista previa para aprobar dirección visual antes
+    de tocar el código real de la app. No está conectado a datos, no reemplaza
+    ningún componente todavía. Cambiá entre Desktop / Tablet / Móvil abajo, y
+    probá el toggle claro/oscuro. El logo, el color de marca (<b class="mono">#131B2E</b>)
+    y el sidebar como navegación principal se mantienen sin cambios respecto a la app actual.
+  </p>
+  <div class="legend">
+    <span><b>Se mantiene:</b> logo, color ancla, estructura sidebar+topbar+main</span>
+    <span><b>Cambia:</b> tipografía, tarjetas, badges, densidad, responsive</span>
+    <span><b>Nuevo:</b> modo oscuro, drawer móvil, rail colapsable</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="active" onclick="setView('desktop', this)">Desktop / Extra grande (≥1280px)</button>
+  <button onclick="setView('tablet', this)">Tablet / Laptop pequeño (768–1279px)</button>
+  <button onclick="setView('mobile', this)">Móvil (375–767px)</button>
+  <button onclick="toggleDrawer()">Ver drawer móvil abierto</button>
+  <button class="theme-toggle" onclick="toggleTheme()">🌓 Alternar claro/oscuro</button>
+</div>
+
+<div class="frame-wrap">
+
+  <!-- ===================== DESKTOP ===================== -->
+  <div class="device active" id="view-desktop">
+    <div class="screen" data-theme="light">
+      <div class="shell">
+        <aside class="rail rail-full">
+          <div class="rail-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
+              <defs>
+                <linearGradient id="ringGradD" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+                <linearGradient id="handleGradD" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+                <linearGradient id="atheGradD" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient>
+                <linearGradient id="appGradD" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#fab662"/><stop offset="100%" stop-color="#f39b2b"/></linearGradient>
+              </defs>
+              <g transform="translate(5,5)">
+                <g transform="translate(5,5)">
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="url(#ringGradD)" stroke-width="6"/>
+                  <circle cx="30" cy="30" r="19" fill="#00f2ff" fill-opacity="0.08"/>
+                  <path d="M 16,24 A 16,16 0 0,1 36,14" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                  <path d="M 46,46 L 60,60" stroke="url(#handleGradD)" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M 12,56 Q 38,65 68,52" fill="none" stroke="url(#atheGradD)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                </g>
+                <text x="70" y="46" fill="url(#atheGradD)" font-family="system-ui,sans-serif" font-size="34" font-weight="700">Athe</text>
+                <text x="145" y="46" fill="url(#appGradD)" font-family="system-ui,sans-serif" font-size="34" font-weight="700">App</text>
+              </g>
+            </svg>
+          </div>
+          <div class="rail-tag" style="margin:-10px 0 16px 6px;">Automatización de pruebas</div>
+          <nav class="nav">
+            <div class="nav-item">🗂️ <span>Espacios</span></div>
+            <div class="nav-item active">📁 <span>Proyectos</span></div>
+            <div class="nav-item">✅ <span>Casos</span></div>
+            <div class="nav-item">▶️ <span>Ejecuciones</span></div>
+            <div class="nav-item">🔑 <span>Credenciales</span></div>
+          </nav>
+          <div class="rail-footer">
+            <div class="proj-pill">Proyecto: Checkout Web <span>▾</span></div>
+          </div>
+          <button class="collapse-btn">‹</button>
+        </aside>
+        <div class="main">
+          <header class="topbar">
+            <div class="crumbs">Proyectos <span>/</span> <b>Checkout Web</b></div>
+            <div class="search">🔎 Buscar caso, ejecución…</div>
+            <div class="topbar-right">
+              <button class="icon-btn">🔔<span class="dot"></span></button>
+              <button class="icon-btn">⚙️</button>
+              <div class="avatar">GG</div>
+            </div>
+          </header>
+          <div class="content">
+            <div class="greet">
+              <h1>Hola, Gustavo</h1>
+              <p>Ambiente QA · Playwright 1.62.1 · Último acceso hoy, 09:14</p>
+            </div>
+            <div class="kpi-grid">
+              <div class="card kpi"><div class="lbl">Ejecuciones hoy</div><div class="val">128</div><span class="trend up">▲ 12% vs ayer</span></div>
+              <div class="card kpi"><div class="lbl">Tasa de éxito</div><div class="val">94.2%</div><span class="trend up">▲ 3.1 pts</span></div>
+              <div class="card kpi"><div class="lbl">Casos activos</div><div class="val">342</div><span class="trend down">▼ 2</span></div>
+              <div class="card kpi"><div class="lbl">Auto-reparados</div><div class="val">17</div><span class="trend up">▲ 5</span></div>
+            </div>
+            <div class="row2">
+              <div class="card panel">
+                <div class="panel-head"><h3>Ejecuciones por día</h3><span>Últimos 14 días</span></div>
+                <div class="chart">
+                  <i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:70%"></i>
+                  <i style="height:60%"></i><i style="height:80%"></i><i style="height:50%"></i><i style="height:90%"></i>
+                  <i style="height:65%"></i><i style="height:75%"></i><i style="height:45%"></i><i style="height:85%"></i>
+                  <i style="height:95%"></i><i style="height:70%"></i>
+                </div>
+              </div>
+              <div class="card panel">
+                <div class="panel-head"><h3>Actividad reciente</h3></div>
+                <div class="activity-item"><span class="dotmark" style="background:var(--success)"></span> Caso "Login válido" pasó</div>
+                <div class="activity-item"><span class="dotmark" style="background:var(--danger)"></span> Caso "Checkout con cupón" falló</div>
+                <div class="activity-item"><span class="dotmark" style="background:var(--amber-ink)"></span> "Alta de usuario" corriendo</div>
+                <div class="activity-item"><span class="dotmark" style="background:#6741C9"></span> "Pago con tarjeta" auto-reparado</div>
+              </div>
+            </div>
+            <div class="card panel">
+              <div class="panel-head"><h3>Ejecuciones recientes</h3><span>Ver todas →</span></div>
+              <table>
+                <thead><tr><th>Caso</th><th>Proyecto</th><th>Estado</th><th>Duración</th><th>Fecha</th></tr></thead>
+                <tbody>
+                  <tr><td>Login con credenciales válidas</td><td>Checkout Web</td><td><span class="badge b-paso">Paso</span></td><td>8.2s</td><td>Hoy, 10:42</td></tr>
+                  <tr><td>Checkout con cupón vencido</td><td>Checkout Web</td><td><span class="badge b-fallo">Falló</span></td><td>14.1s</td><td>Hoy, 10:38</td></tr>
+                  <tr><td>Alta de usuario nuevo</td><td>Backoffice</td><td><span class="badge b-corriendo"><span class="pulse"></span>Corriendo</span></td><td>—</td><td>Hoy, 10:35</td></tr>
+                  <tr><td>Pago con tarjeta guardada</td><td>Checkout Web</td><td><span class="badge b-reparado">Reparado</span></td><td>11.4s</td><td>Hoy, 10:20</td></tr>
+                  <tr><td>Exportar reporte mensual</td><td>Backoffice</td><td><span class="badge b-pendiente">Pendiente</span></td><td>—</td><td>Hoy, 10:15</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TABLET ===================== -->
+  <div class="device" id="view-tablet">
+    <div class="screen" data-theme="light">
+      <div class="shell">
+        <aside class="rail rail-icon">
+          <div class="rail-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><circle cx="30" cy="26" r="16" fill="none" stroke="#38bdf8" stroke-width="5"/><path d="M42,38 L52,48" stroke="#0284c7" stroke-width="5" stroke-linecap="round"/></svg></div>
+          <nav class="nav">
+            <div class="nav-item">🗂️</div>
+            <div class="nav-item active">📁</div>
+            <div class="nav-item">✅</div>
+            <div class="nav-item">▶️</div>
+            <div class="nav-item">🔑</div>
+          </nav>
+        </aside>
+        <div class="main">
+          <header class="topbar">
+            <button class="hamburger">≡</button>
+            <div class="crumbs"><b>Checkout Web</b></div>
+            <div class="topbar-right">
+              <button class="icon-btn">🔎</button>
+              <button class="icon-btn">🔔<span class="dot"></span></button>
+              <div class="avatar">GG</div>
+            </div>
+          </header>
+          <div class="content">
+            <div class="greet"><h1>Hola, Gustavo</h1><p>Ambiente QA · Playwright 1.62.1</p></div>
+            <div class="kpi-grid">
+              <div class="card kpi"><div class="lbl">Ejecuciones hoy</div><div class="val">128</div><span class="trend up">▲ 12%</span></div>
+              <div class="card kpi"><div class="lbl">Tasa de éxito</div><div class="val">94.2%</div><span class="trend up">▲ 3.1 pts</span></div>
+              <div class="card kpi"><div class="lbl">Casos activos</div><div class="val">342</div><span class="trend down">▼ 2</span></div>
+              <div class="card kpi"><div class="lbl">Auto-reparados</div><div class="val">17</div><span class="trend up">▲ 5</span></div>
+            </div>
+            <div class="row2">
+              <div class="card panel">
+                <div class="panel-head"><h3>Ejecuciones por día</h3></div>
+                <div class="chart"><i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:60%"></i><i style="height:80%"></i><i style="height:50%"></i></div>
+              </div>
+              <div class="card panel">
+                <div class="panel-head"><h3>Actividad</h3></div>
+                <div class="activity-item"><span class="dotmark" style="background:var(--success)"></span> "Login válido" pasó</div>
+                <div class="activity-item"><span class="dotmark" style="background:var(--danger)"></span> "Checkout" falló</div>
+              </div>
+            </div>
+            <div class="card panel">
+              <div class="panel-head"><h3>Ejecuciones recientes</h3></div>
+              <table>
+                <thead><tr><th>Caso</th><th>Estado</th><th>Fecha</th></tr></thead>
+                <tbody>
+                  <tr><td>Login válido</td><td><span class="badge b-paso">Paso</span></td><td>10:42</td></tr>
+                  <tr><td>Checkout cupón</td><td><span class="badge b-fallo">Falló</span></td><td>10:38</td></tr>
+                  <tr><td>Alta usuario</td><td><span class="badge b-corriendo"><span class="pulse"></span>Corriendo</span></td><td>10:35</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MOBILE ===================== -->
+  <div class="device" id="view-mobile">
+    <div class="screen" data-theme="light">
+      <div class="shell" style="position:relative;">
+        <div class="main">
+          <header class="topbar" style="padding:0 14px;gap:10px;">
+            <button class="hamburger" onclick="toggleDrawer()">≡</button>
+            <div class="crumbs"><b>Checkout Web</b></div>
+            <div class="topbar-right">
+              <button class="icon-btn">🔔<span class="dot"></span></button>
+              <div class="avatar">GG</div>
+            </div>
+          </header>
+          <div class="content tight">
+            <div class="greet"><h1 style="font-size:20px;">Hola, Gustavo</h1><p>Ambiente QA</p></div>
+            <div class="kpi-grid">
+              <div class="card kpi"><div class="lbl">Ejecuciones hoy</div><div class="val">128</div><span class="trend up">▲ 12%</span></div>
+              <div class="card kpi"><div class="lbl">Tasa de éxito</div><div class="val">94.2%</div><span class="trend up">▲ 3.1 pts</span></div>
+            </div>
+            <div class="card panel" style="margin-bottom:14px;">
+              <div class="panel-head"><h3>Ejecuciones por día</h3></div>
+              <div class="chart" style="height:100px;"><i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:60%"></i></div>
+            </div>
+            <div class="card panel">
+              <div class="panel-head"><h3>Recientes</h3></div>
+              <div class="activity-item"><span class="badge b-paso">Paso</span>&nbsp; Login válido</div>
+              <div class="activity-item"><span class="badge b-fallo">Falló</span>&nbsp; Checkout cupón</div>
+              <div class="activity-item"><span class="badge b-corriendo"><span class="pulse"></span>Corriendo</span>&nbsp; Alta usuario</div>
+            </div>
+          </div>
+        </div>
+        <!-- drawer overlay (oculto por defecto) -->
+        <div class="drawer-scrim" id="scrim" style="display:none;" onclick="toggleDrawer()"></div>
+        <aside class="rail rail-full rail-drawer" id="drawer" style="display:none;">
+          <div class="rail-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><circle cx="30" cy="26" r="16" fill="none" stroke="#38bdf8" stroke-width="5"/><path d="M42,38 L52,48" stroke="#0284c7" stroke-width="5" stroke-linecap="round"/><text x="0" y="55" fill="#38bdf8" font-size="14" font-weight="700">AtheApp</text></svg></div>
+          <nav class="nav">
+            <div class="nav-item">🗂️ Espacios</div>
+            <div class="nav-item active">📁 Proyectos</div>
+            <div class="nav-item">✅ Casos</div>
+            <div class="nav-item">▶️ Ejecuciones</div>
+            <div class="nav-item">🔑 Credenciales</div>
+          </nav>
+          <div class="rail-footer">
+            <div class="proj-pill">gustavo@vortest.com<br><span style="font-size:11px;">Cerrar sesión</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="notes">
+  <h4>Qué estás viendo</h4>
+  Este mockup usa emojis como placeholder de los íconos reales (hoy Material Symbols); en Fase 2 se mantienen
+  los íconos actuales, solo cambia su tratamiento visual. Los tres frames representan los breakpoints
+  pedidos: Desktop/XL (≥1280px, sidebar completo), Tablet/Laptop pequeño (768–1279px, rail solo-íconos) y
+  Móvil (&lt;768px, drawer). El botón "Ver drawer móvil abierto" simula la apertura del menú lateral en el frame móvil.
+  El toggle claro/oscuro aplica el tema propuesto a los tres frames a la vez.
+</div>
+
+<script>
+function setView(name, btn){
+  document.querySelectorAll('.device').forEach(d=>d.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+function toggleDrawer(){
+  const scrim = document.getElementById('scrim');
+  const drawer = document.getElementById('drawer');
+  const open = drawer.style.display === 'flex';
+  drawer.style.display = open ? 'none' : 'flex';
+  scrim.style.display = open ? 'none' : 'block';
+  if(!open) setView('mobile', document.querySelectorAll('.tabs button')[2]);
+}
+function toggleTheme(){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.setAttribute('data-theme', s.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+}
+</script>
+</body>
+</html>
