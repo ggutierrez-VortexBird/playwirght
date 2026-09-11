@@ -432,7 +432,11 @@
     box-shadow:0 24px 50px -24px rgba(19,27,46,0.35);
     border:1px solid #d7ddE6;
   }
-  .g-frame .screen{width:100%;height:auto;min-height:680px;border-radius:0;}
+  .g-frame .screen{width:100%;height:auto;min-height:680px;border-radius:0;overflow:visible;}
+  .g-frame .shell{height:auto;align-items:stretch;}
+  .g-frame .rail{height:auto;align-self:stretch;}
+  .g-frame .content{flex:1 1 auto;overflow:visible;}
+  .g-frame .main{overflow:visible;}
   .g-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
   .g-row .g-frame{flex:0 0 auto;}
 
@@ -510,7 +514,7 @@
 
   /* standalone pages (login / 404): sin sidebar/topbar */
   .standalone{
-    height:100%;display:flex;align-items:center;justify-content:center;
+    min-height:560px;display:flex;align-items:center;justify-content:center;
     background:radial-gradient(circle at 30% 20%, #1B2438 0%, var(--navy) 55%, #0B0F1A 100%);
     padding:24px;
   }
