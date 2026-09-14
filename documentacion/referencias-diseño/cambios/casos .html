@@ -1,0 +1,659 @@
+<!DOCTYPE html><html class="h-full bg-slate-50" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>AtheApp - Espacios de Trabajo</title>
+<!-- Tailwind CSS CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            },
+            sidebar: {
+              DEFAULT: '#0B132B',
+              card: '#1C2541',
+              active: '#1E293B',
+              border: '#1E293B'
+            }
+          },
+          boxShadow: {
+            'card': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+            'card-hover': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars">
+    /* Custom clean scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="h-full font-sans antialiased text-slate-800 bg-slate-50 flex overflow-hidden">
+<!-- BEGIN: Sidebar -->
+<aside class="w-64 bg-[#0B132B] flex flex-col justify-between shrink-0 select-none border-r border-slate-800/80 z-20" data-purpose="main-sidebar">
+<div class="flex flex-col h-full">
+<!-- App Brand / Logo -->
+<div class="h-16 flex items-center px-6 gap-3 border-b border-slate-800/60" data-purpose="sidebar-brand">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-bold text-lg tracking-wider">
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+<path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="text-white font-bold text-lg tracking-tight">Athe<span class="text-amber-400">App</span></span>
+<span class="text-[10px] font-semibold uppercase bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded ml-1 border border-blue-400/20">Pro</span>
+</div>
+<span class="text-[11px] font-medium text-slate-400 -mt-0.5">Automatización de pruebas</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto" data-purpose="sidebar-navigation">
+<!-- Inicio -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-all font-medium text-sm group" href="#">
+<svg class="w-5 h-5 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Inicio</span>
+</a>
+<!-- Espacios (Active Tab) -->
+<a class="flex items-center justify-between px-3 py-2.5 rounded-xl bg-gradient-to-r from-blue-600/20 to-blue-500/10 border border-blue-500/30 text-white font-semibold text-sm shadow-sm transition-all group" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+<path d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Espacios</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+</a>
+<!-- Proyectos -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-all font-medium text-sm group" href="#">
+<svg class="w-5 h-5 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Proyectos</span>
+</a>
+<!-- Casos -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-all font-medium text-sm group" href="#">
+<svg class="w-5 h-5 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Casos de prueba</span>
+</a>
+<!-- Ejecuciones -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-all font-medium text-sm group" href="#">
+<svg class="w-5 h-5 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Ejecuciones</span>
+</a>
+<!-- Credenciales -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-all font-medium text-sm group" href="#">
+<svg class="w-5 h-5 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Credenciales</span>
+</a>
+<!-- Usuarios -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800/50 transition-all font-medium text-sm group" href="#">
+<svg class="w-5 h-5 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Usuarios</span>
+</a>
+</nav>
+<!-- Sidebar Bottom Widgets: Selector & User Info -->
+<div class="p-3 border-t border-slate-800/80 space-y-3 bg-[#080d1f]" data-purpose="sidebar-footer">
+<!-- Quick Project Switcher Button -->
+<button class="w-full text-left px-3 py-2 rounded-xl bg-slate-800/40 hover:bg-slate-800/80 text-xs font-medium text-slate-300 flex items-center justify-between border border-slate-700/40 transition">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="truncate">Seleccionar proyecto...</span>
+</div>
+<svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="m19.5 8.25-7.5 7.5-7.5-7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Current User Profile Item -->
+<div class="flex items-center justify-between px-2 pt-1">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white text-xs ring-2 ring-indigo-500/20">
+              N
+            </div>
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-white">admin</span>
+<span class="text-[10px] font-medium text-emerald-400">Superadmin</span>
+</div>
+</div>
+<button class="text-slate-400 hover:text-rose-400 p-1 rounded-lg hover:bg-slate-800 transition" title="Cerrar sesión">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 overflow-hidden" data-purpose="app-shell">
+<!-- Topbar Header -->
+<header class="h-16 bg-white border-b border-slate-200/80 px-8 flex items-center justify-between shrink-0 z-10" data-purpose="topbar-navigation">
+<!-- Left side: Dropdown & Search -->
+<div class="flex items-center gap-4 flex-1 max-w-2xl">
+<!-- Espacio Dropdown Pill -->
+<div class="relative">
+<button class="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/70 border border-slate-200 px-3 py-2 rounded-xl transition">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span>
+<span class="">Seleccionar espacio</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="m19.5 8.25-7.5 7.5-7.5-7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- Global Search Input with Keyboard Shortcut -->
+<div class="relative flex-1">
+<svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<input class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-14 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition" placeholder="Buscar por nombre, tag o identificador de espacio..." type="text">
+<div class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">
+<kbd class="px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-400 bg-slate-200/70 border border-slate-300/80 rounded">⌘K</kbd>
+</div>
+</div>
+</div>
+<!-- Right side: Notifications, Settings & User Avatar -->
+<div class="flex items-center gap-3">
+<!-- Notification Button with Indicator Badge -->
+<button class="relative w-9 h-9 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center transition border border-transparent hover:border-slate-200">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 border-2 border-white rounded-full"></span>
+</button>
+<!-- Settings Button -->
+<button class="w-9 h-9 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center transition border border-transparent hover:border-slate-200">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 0 1 0 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 0 1 0-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281Z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="h-6 w-px bg-slate-200 mx-1"></div>
+<!-- User Bubble Badge -->
+<button class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 transition border border-transparent hover:border-slate-200">
+<div class="w-8 h-8 rounded-full bg-slate-900 text-amber-400 font-bold text-xs flex items-center justify-center ring-2 ring-amber-400/20 shadow-sm">
+            AD
+          </div>
+<span class="text-xs font-bold text-slate-700 hidden sm:inline">Admin Core</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Workspace Body -->
+<main class="flex-1 overflow-y-auto px-8 py-8" data-purpose="main-workspace">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Header Section with Title, Description & Action Buttons -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-slate-200/80" data-purpose="page-heading">
+<div class="space-y-1.5 max-w-2xl">
+<div class="flex items-center gap-3">
+<h1 class="text-2xl font-bold tracking-tight text-slate-900">Espacios de Trabajo</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                6 activos
+              </span>
+</div>
+<p class="text-sm text-slate-500 leading-relaxed">
+              Organiza tu trabajo por cliente o área. Cada espacio tiene un color propio distintivo que se propaga automáticamente a sus proyectos, suites de prueba y ejecuciones.
+            </p>
+</div>
+<!-- Quick Filters & CTA Button -->
+<div class="flex items-center gap-3 shrink-0">
+<!-- Grid / List Switcher -->
+<div class="bg-slate-100 p-1 rounded-xl border border-slate-200/70 flex items-center gap-1">
+<button class="p-1.5 rounded-lg bg-white shadow-xs text-slate-800" title="Vista en cuadrícula">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<button class="p-1.5 rounded-lg text-slate-500 hover:text-slate-800" title="Vista en lista">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- New Space Button -->
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30 transition active:scale-95">
+<svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Nuevo espacio</span>
+</button>
+</div>
+</div>
+<!-- BEGIN: Cards Grid -->
+<!-- 3-Column Grid of Beautifully Redesigned Workspace Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-purpose="spaces-card-grid"><!-- CARD 1: Azul Índigo (Banca Móvil) -->
+<article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group">
+  <!-- Cabecera Coloreada con bloque sólido (estilo tarjeta de referencia) -->
+  <div class="bg-indigo-600 px-5 pt-4 pb-5 text-white flex flex-col justify-between relative rounded-t-2xl">
+    <div class="flex items-center justify-between gap-2 text-indigo-100/90 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-medium tracking-wider text-[11px] bg-white/15 px-2 py-0.5 rounded-md">#ESP-101</span>
+        <span class="text-[11px]">hace 2h</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Activo
+        </span>
+        <div class="flex items-center gap-0.5 ml-1">
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="3 miembros">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"></path></svg>
+          </button>
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="Editar espacio">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <span class="text-[11px] font-medium text-indigo-200 block uppercase tracking-wider">Espacio de trabajo</span>
+      <h3 class="text-lg font-bold text-white tracking-tight leading-snug mt-0.5">Banca Móvil - Banco X</h3>
+    </div>
+  </div>
+
+  <!-- Cuerpo de la Tarjeta (Blanco y Limpio) -->
+  <div class="p-5 flex-1 flex flex-col justify-between bg-white rounded-b-2xl space-y-4">
+    <div class="space-y-3">
+      <!-- Métricas Rollup: Proyectos y Casos -->
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span class="font-medium text-slate-700">8 proyectos</span>
+        <span class="text-slate-300">•</span>
+        <span class="font-medium text-slate-700">142 casos de prueba</span>
+      </div>
+
+      <!-- Tasa de éxito y barra de salud agregada -->
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Tasa de éxito</span>
+          <span class="font-bold text-emerald-600">99.2%</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+          <div class="h-full bg-emerald-500 rounded-full" style="width: 99.2%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fila inferior: Miembros y botón estilo píldora oscura -->
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2 overflow-hidden">
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-blue-500 text-white font-bold text-[10px] flex items-center justify-center">LR</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-indigo-500 text-white font-bold text-[10px] flex items-center justify-center">MG</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-slate-700 text-white font-medium text-[9px] flex items-center justify-center">+4</div>
+        </div>
+        <span class="text-[11px] font-medium text-slate-500">6 miembros</span>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-900 hover:bg-indigo-600 text-white text-xs font-semibold shadow-sm transition duration-200 gap-1">
+        <span class="">Entrar</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</article>
+
+<!-- CARD 2: Ámbar / Naranja Cálido (Acme E2E Core) -->
+<article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group">
+  <div class="bg-amber-500 px-5 pt-4 pb-5 text-white flex flex-col justify-between relative rounded-t-2xl">
+    <div class="flex items-center justify-between gap-2 text-amber-100 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-medium tracking-wider text-[11px] bg-white/20 px-2 py-0.5 rounded-md text-white">#ESP-204</span>
+        <span class="text-[11px] text-white/90">ayer</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span> Activo
+        </span>
+        <div class="flex items-center gap-0.5 ml-1">
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="2 miembros">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"></path></svg>
+          </button>
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="Editar espacio">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <span class="text-[11px] font-medium text-amber-100 block uppercase tracking-wider">Espacio de trabajo</span>
+      <h3 class="text-lg font-bold text-white tracking-tight leading-snug mt-0.5">Acme E2E Core Suite</h3>
+    </div>
+  </div>
+
+  <div class="p-5 flex-1 flex flex-col justify-between bg-white rounded-b-2xl space-y-4">
+    <div class="space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span class="font-medium text-slate-700">5 proyectos</span>
+        <span class="text-slate-300">•</span>
+        <span class="font-medium text-slate-700">89 casos de prueba</span>
+      </div>
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Tasa de éxito</span>
+          <span class="font-bold text-emerald-600">96.4%</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+          <div class="h-full bg-emerald-500 rounded-full" style="width: 96.4%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2 overflow-hidden">
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-amber-600 text-white font-bold text-[10px] flex items-center justify-center">JP</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-teal-600 text-white font-bold text-[10px] flex items-center justify-center">AS</div>
+        </div>
+        <span class="text-[11px] font-medium text-slate-500">2 miembros</span>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition duration-200 gap-1">
+        <span class="">Entrar</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</article>
+
+<!-- CARD 3: Esmeralda / Verde (Portal Clientes B2B) -->
+<article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group">
+  <div class="bg-emerald-600 px-5 pt-4 pb-5 text-white flex flex-col justify-between relative rounded-t-2xl">
+    <div class="flex items-center justify-between gap-2 text-emerald-100 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-medium tracking-wider text-[11px] bg-white/20 px-2 py-0.5 rounded-md text-white">#ESP-309</span>
+        <span class="text-[11px] text-white/90">hace 3d</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span> Activo
+        </span>
+        <div class="flex items-center gap-0.5 ml-1">
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="3 miembros">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"></path></svg>
+          </button>
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="Editar espacio">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <span class="text-[11px] font-medium text-emerald-100 block uppercase tracking-wider">Espacio de trabajo</span>
+      <h3 class="text-lg font-bold text-white tracking-tight leading-snug mt-0.5">Portal Clientes B2B</h3>
+    </div>
+  </div>
+
+  <div class="p-5 flex-1 flex flex-col justify-between bg-white rounded-b-2xl space-y-4">
+    <div class="space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span class="font-medium text-slate-700">12 proyectos</span>
+        <span class="text-slate-300">•</span>
+        <span class="font-medium text-slate-700">310 casos de prueba</span>
+      </div>
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Tasa de éxito</span>
+          <span class="font-bold text-emerald-600">98.8%</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+          <div class="h-full bg-emerald-500 rounded-full" style="width: 98.8%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2 overflow-hidden">
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center">CL</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center">FM</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-purple-600 text-white font-bold text-[10px] flex items-center justify-center">ET</div>
+        </div>
+        <span class="text-[11px] font-medium text-slate-500">3 miembros</span>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-900 hover:bg-emerald-600 text-white text-xs font-semibold shadow-sm transition duration-200 gap-1">
+        <span class="">Entrar</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</article>
+
+<!-- CARD 4: Azul Cobalto (Checkout & Pagos Stripe) -->
+<article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group">
+  <div class="bg-blue-600 px-5 pt-4 pb-5 text-white flex flex-col justify-between relative rounded-t-2xl">
+    <div class="flex items-center justify-between gap-2 text-blue-100 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-medium tracking-wider text-[11px] bg-white/20 px-2 py-0.5 rounded-md text-white">#ESP-418</span>
+        <span class="text-[11px] text-white/90">hace 1h</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span> Activo
+        </span>
+        <div class="flex items-center gap-0.5 ml-1">
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="2 miembros">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"></path></svg>
+          </button>
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="Editar espacio">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <span class="text-[11px] font-medium text-blue-100 block uppercase tracking-wider">Espacio de trabajo</span>
+      <h3 class="text-lg font-bold text-white tracking-tight leading-snug mt-0.5">Checkout &amp; Pagos Stripe</h3>
+    </div>
+  </div>
+
+  <div class="p-5 flex-1 flex flex-col justify-between bg-white rounded-b-2xl space-y-4">
+    <div class="space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span class="font-medium text-slate-700">4 proyectos</span>
+        <span class="text-slate-300">•</span>
+        <span class="font-medium text-slate-700">76 casos de prueba</span>
+      </div>
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Tasa de éxito</span>
+          <span class="font-bold text-emerald-600">100%</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+          <div class="h-full bg-emerald-500 rounded-full" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2 overflow-hidden">
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-indigo-600 text-white font-bold text-[10px] flex items-center justify-center">DA</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-slate-800 text-white font-bold text-[10px] flex items-center justify-center">AD</div>
+        </div>
+        <span class="text-[11px] font-medium text-slate-500">2 miembros</span>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold shadow-sm transition duration-200 gap-1">
+        <span class="">Entrar</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</article>
+
+<!-- CARD 5: Violeta / Púrpura (Microservicios Core) -->
+<article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group">
+  <div class="bg-purple-600 px-5 pt-4 pb-5 text-white flex flex-col justify-between relative rounded-t-2xl">
+    <div class="flex items-center justify-between gap-2 text-purple-100 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-medium tracking-wider text-[11px] bg-white/20 px-2 py-0.5 rounded-md text-white">#ESP-520</span>
+        <span class="text-[11px] text-white/90">ayer</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span> Activo
+        </span>
+        <div class="flex items-center gap-0.5 ml-1">
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="2 miembros">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"></path></svg>
+          </button>
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="Editar espacio">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.688-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <span class="text-[11px] font-medium text-purple-100 block uppercase tracking-wider">Espacio de trabajo</span>
+      <h3 class="text-lg font-bold text-white tracking-tight leading-snug mt-0.5">Microservicios Core</h3>
+    </div>
+  </div>
+
+  <div class="p-5 flex-1 flex flex-col justify-between bg-white rounded-b-2xl space-y-4">
+    <div class="space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span class="font-medium text-slate-700">9 proyectos</span>
+        <span class="text-slate-300">•</span>
+        <span class="font-medium text-slate-700">215 casos de prueba</span>
+      </div>
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Tasa de éxito</span>
+          <span class="font-bold text-amber-600">92.1%</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+          <div class="h-full bg-amber-500 rounded-full" style="width: 92.1%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2 overflow-hidden">
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-purple-700 text-white font-bold text-[10px] flex items-center justify-center">KA</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-rose-600 text-white font-bold text-[10px] flex items-center justify-center">RO</div>
+        </div>
+        <span class="text-[11px] font-medium text-slate-500">2 miembros</span>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-900 hover:bg-purple-600 text-white text-xs font-semibold shadow-sm transition duration-200 gap-1">
+        <span class="">Entrar</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</article>
+
+<!-- CARD 6: Rojo Carmesí con Badge Inactivo (Espacio Inactivo) -->
+<article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group opacity-90 hover:opacity-100">
+  <div class="bg-rose-600 px-5 pt-4 pb-5 text-white flex flex-col justify-between relative rounded-t-2xl">
+    <div class="flex items-center justify-between gap-2 text-rose-100 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-medium tracking-wider text-[11px] bg-white/20 px-2 py-0.5 rounded-md text-white">#ESP-612</span>
+        <span class="text-[11px] text-white/90">hace 5d</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white text-rose-700 shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Inactivo
+        </span>
+        <div class="flex items-center gap-0.5 ml-1">
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="2 miembros">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"></path></svg>
+          </button>
+          <button class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition" title="Editar espacio">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.688-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <span class="text-[11px] font-medium text-rose-100 block uppercase tracking-wider">Espacio de trabajo</span>
+      <h3 class="text-lg font-bold text-white tracking-tight leading-snug mt-0.5">Onboarding &amp; Identidad</h3>
+    </div>
+  </div>
+
+  <div class="p-5 flex-1 flex flex-col justify-between bg-white rounded-b-2xl space-y-4">
+    <div class="space-y-3">
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span class="font-medium text-slate-700">3 proyectos</span>
+        <span class="text-slate-300">•</span>
+        <span class="font-medium text-slate-700">54 casos de prueba</span>
+      </div>
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Tasa de éxito</span>
+          <span class="font-bold text-emerald-600">97.5%</span>
+        </div>
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+          <div class="h-full bg-emerald-500 rounded-full" style="width: 97.5%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2 overflow-hidden">
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-rose-500 text-white font-bold text-[10px] flex items-center justify-center">SM</div>
+          <div class="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-indigo-600 text-white font-bold text-[10px] flex items-center justify-center">VN</div>
+        </div>
+        <span class="text-[11px] font-medium text-slate-500">2 miembros</span>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-900 hover:bg-rose-600 text-white text-xs font-semibold shadow-sm transition duration-200 gap-1">
+        <span class="">Entrar</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</article></div>
+<!-- END: Cards Grid -->
+<!-- Bottom Pagination and Summary Footer -->
+<div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500" data-purpose="workspace-footer">
+<p class="">Mostrando <span class="font-semibold text-slate-700">6</span> de <span class="font-semibold text-slate-700">6</span> espacios registrados</p>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-400 font-medium cursor-not-allowed" disabled="">
+              Anterior
+            </button>
+<span class="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 font-bold border border-blue-200">1</span>
+<button class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-400 font-medium cursor-not-allowed" disabled="">
+              Siguiente
+            </button>
+</div>
+</div>
+</div>
+</main>
+<!-- END: Main Content Area -->
+</div>
+
+
+</body></html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-slate-50" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtheApp - Gestión de Proyectos</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0f172a',
+              dark: '#0a0f1d',
+              sidebar: '#111827',
+              accent: '#38bdf8',
+              orange: '#f97316',
+              purple: '#6366f1'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          },
+          boxShadow: {
+            'card': '0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
+            'card-hover': '0 20px 30px -10px rgba(15, 23, 42, 0.12), 0 10px 12px -6px rgba(15, 23, 42, 0.06)'
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="h-full font-sans text-slate-800 antialiased overflow-hidden flex bg-[#f8fafc]">
+<!-- BEGIN: Sidebar -->
+<aside class="w-64 bg-[#0f172a] text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-slate-800 select-none z-30">
+<!-- Top Branding & Navigation -->
+<div class="flex flex-col flex-1 min-h-0">
+<!-- Logo Header -->
+<div class="h-20 px-6 flex flex-col justify-center border-b border-slate-800/80">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 via-blue-600 to-amber-400 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-baseline">
+<span class="text-xl font-bold tracking-tight text-white">Athe</span>
+<span class="text-xl font-extrabold tracking-tight text-amber-400">App</span>
+</div>
+<p class="text-[11px] font-medium text-slate-400 tracking-wide">Automatización de pruebas</p>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-3.5 py-6 space-y-1.5 overflow-y-auto" data-purpose="main-nav">
+<!-- Item: Inicio -->
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="#">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Inicio</span>
+</a>
+<!-- Item: Espacios -->
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="#">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Espacios</span>
+</a>
+<!-- Item: Proyectos (ACTIVO) -->
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600/30 to-blue-500/10 border border-blue-500/30 text-sky-400 shadow-sm transition-colors" href="#">
+<div class="flex items-center gap-3.5">
+<svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-white">Proyectos</span>
+</div>
+<span class="w-1.5 h-4 rounded-full bg-amber-400"></span>
+</a>
+<!-- Item: Casos -->
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="#">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Casos</span>
+</a>
+<!-- Item: Ejecuciones -->
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="#">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Ejecuciones</span>
+</a>
+<!-- Item: Credenciales -->
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="#">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Credenciales</span>
+</a>
+<!-- Item: Usuarios -->
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors" href="#">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Usuarios</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Bottom: Project Quick Select & User Account -->
+<div class="p-3.5 border-t border-slate-800/80 bg-slate-900/60 space-y-3" data-purpose="sidebar-user-footer">
+<!-- Fast Project Selector Button -->
+<button class="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-300 bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 rounded-xl transition shadow-inner">
+<span class="truncate">Seleccionar proyecto</span>
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- User Profile Card -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 border border-slate-600/60 flex items-center justify-center font-bold text-white text-sm shadow">
+            N
+          </div>
+<div class="truncate">
+<p class="text-sm font-semibold text-white truncate leading-none">admin</p>
+<p class="text-[11px] font-normal text-slate-400 truncate mt-1">Superadmin</p>
+</div>
+</div>
+<!-- Logout / More Button -->
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Cerrar sesión">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<!-- Main Work Area -->
+<div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+<!-- BEGIN: TopHeader -->
+<header class="h-16 bg-white border-b border-slate-200/90 px-8 flex items-center justify-between gap-6 flex-shrink-0 z-20">
+<!-- Left: Space dropdown & Global Search -->
+<div class="flex items-center gap-4 flex-1 max-w-2xl">
+<!-- Space Selector Dropdown -->
+<div class="relative">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200/90 transition">
+<span>Seleccionar espacio</span>
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+</div>
+<input class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50/90 hover:bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition placeholder-slate-400" placeholder="Buscar proyecto..." type="search"/>
+</div>
+</div>
+<!-- Right: Actions & User Status -->
+<div class="flex items-center gap-3.5">
+<!-- Notification Button -->
+<button class="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- Settings Button -->
+<button class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Divider -->
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- Compact User Badge -->
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-slate-900 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+            AD
+          </div>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 overflow-y-auto px-8 py-8" data-purpose="projects-container">
+<!-- Page Header: Title, Stats & CTA -->
+<section class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-slate-200/80">
+<div>
+<div class="flex items-baseline gap-3">
+<h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Proyectos</h1>
+<span class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-0.5 rounded-full border border-slate-200/60">
+              2 proyectos · 11 espacios
+            </span>
+</div>
+<p class="text-sm text-slate-500 mt-1">Supervisa y ejecuta las suites de automatización organizadas por espacios de trabajo</p>
+</div>
+<!-- Action Button -->
+<button class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm hover:shadow transition duration-150 ease-in-out">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span>Nuevo Proyecto</span>
+</button>
+</section>
+<!-- Projects Grouped by Space -->
+<div class="mt-8 space-y-10">
+<!-- SECTION 1: Alcaldia de Medellin -->
+<div class="space-y-4">
+<!-- Space Header Category -->
+<div class="flex items-center gap-2.5">
+<div class="w-3.5 h-3.5 rounded-md bg-blue-600 shadow-sm shadow-blue-500/30"></div>
+<h2 class="text-base font-bold text-slate-800 tracking-tight flex items-center gap-2">
+              Alcaldia de medellin
+              <span class="text-xs font-medium text-slate-400 tracking-normal">(1 proyecto)</span>
+</h2>
+</div>
+<!-- Cards Grid for Alcaldia -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+<!-- MODERN PROJECT CARD 1: CATASTRO -->
+<div class="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-all duration-200 overflow-hidden flex flex-col group">
+<!-- Solid Color Curved Header (Inspired by Ref Image) -->
+<div class="bg-blue-600 text-white p-4 pb-5 rounded-t-2xl relative">
+<!-- Top metadata row in card header -->
+<div class="flex items-center justify-between text-xs mb-2.5">
+<span class="font-mono font-semibold tracking-wider bg-blue-700/60 px-2.5 py-0.5 rounded-md border border-blue-400/30 text-blue-100">
+                    #MED-01
+                  </span>
+<!-- Quick actions -->
+<div class="flex items-center gap-1 opacity-90 group-hover:opacity-100 transition">
+<button class="p-1 hover:bg-blue-700/70 rounded-md transition" title="Miembros">
+<svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="p-1 hover:bg-blue-700/70 rounded-md transition" title="Editar">
+<svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="p-1 hover:bg-blue-700/70 rounded-md transition hover:text-red-200" title="Eliminar">
+<svg class="w-4 h-4 text-blue-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Space tag & Big Title -->
+<p class="text-[11px] font-semibold text-blue-200 tracking-wider uppercase">ALCALDIA DE MEDELLIN</p>
+<div class="flex items-center justify-between mt-0.5">
+<h3 class="text-xl font-bold tracking-tight text-white capitalize">catastro</h3>
+<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-white">dev</span>
+</div>
+</div>
+<!-- Card Body Content -->
+<div class="p-5 flex-1 flex flex-col justify-between space-y-5 bg-white">
+<!-- Health Rate (Success Rate) -->
+<div>
+<div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+<span class="text-slate-500">Tasa de éxito</span>
+<span class="text-rose-600 font-bold">0%</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-rose-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+</div>
+<!-- Metric Counters Row -->
+<div class="grid grid-cols-3 gap-2 py-3 px-3 bg-slate-50/80 rounded-xl border border-slate-100 text-center">
+<div>
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">CASOS</span>
+<span class="text-lg font-bold text-slate-800 leading-tight">1</span>
+</div>
+<div class="border-x border-slate-200/60">
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">CONFORMES</span>
+<span class="text-lg font-bold text-emerald-600 leading-tight">0</span>
+</div>
+<div>
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">NO CONF.</span>
+<span class="text-lg font-bold text-rose-600 leading-tight">1</span>
+</div>
+</div>
+<!-- Card Footer with Pill Buttons -->
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+<!-- Environment & Time -->
+<div class="flex items-center gap-2 text-slate-400">
+<span class="inline-flex items-center gap-1 font-medium text-slate-500">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                      dev
+                    </span>
+<span>•</span>
+<span>hace 21 d</span>
+</div>
+<!-- Dark Action Pill (matching inspiration reference) -->
+<button class="px-3.5 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs tracking-wide shadow-sm hover:shadow transition flex items-center gap-1">
+<span>Ver</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Coomeva -->
+<div class="space-y-4">
+<!-- Space Header Category -->
+<div class="flex items-center gap-2.5">
+<div class="w-3.5 h-3.5 rounded-md bg-emerald-600 shadow-sm shadow-emerald-500/30"></div>
+<h2 class="text-base font-bold text-slate-800 tracking-tight flex items-center gap-2">
+              Coomeva
+              <span class="text-xs font-medium text-slate-400 tracking-normal">(1 proyecto)</span>
+</h2>
+</div>
+<!-- Cards Grid for Coomeva -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+<!-- MODERN PROJECT CARD 2: PROYECTO BASE -->
+<div class="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-all duration-200 overflow-hidden flex flex-col group">
+<!-- Solid Color Curved Header -->
+<div class="bg-emerald-600 text-white p-4 pb-5 rounded-t-2xl relative">
+<!-- Top metadata row in card header -->
+<div class="flex items-center justify-between text-xs mb-2.5">
+<span class="font-mono font-semibold tracking-wider bg-emerald-700/60 px-2.5 py-0.5 rounded-md border border-emerald-400/30 text-emerald-100">
+                    #CMV-04
+                  </span>
+<!-- Quick actions -->
+<div class="flex items-center gap-1 opacity-90 group-hover:opacity-100 transition">
+<button class="p-1 hover:bg-emerald-700/70 rounded-md transition" title="Miembros">
+<svg class="w-4 h-4 text-emerald-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="p-1 hover:bg-emerald-700/70 rounded-md transition" title="Editar">
+<svg class="w-4 h-4 text-emerald-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="p-1 hover:bg-emerald-700/70 rounded-md transition hover:text-red-200" title="Eliminar">
+<svg class="w-4 h-4 text-emerald-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Space tag & Big Title -->
+<p class="text-[11px] font-semibold text-emerald-100 tracking-wider uppercase">COOMEVA</p>
+<div class="flex items-center justify-between mt-0.5">
+<h3 class="text-xl font-bold tracking-tight text-white capitalize">Proyecto base</h3>
+<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-white">dev</span>
+</div>
+</div>
+<!-- Card Body Content -->
+<div class="p-5 flex-1 flex flex-col justify-between space-y-5 bg-white">
+<!-- Health Rate (Success Rate) -->
+<div>
+<div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+<span class="text-slate-500">Tasa de éxito</span>
+<span class="text-amber-500 font-bold">40%</span>
+</div>
+<!-- Progress Bar with Amber Fill -->
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-gradient-to-r from-amber-400 to-amber-500 h-2 rounded-full transition-all duration-500" style="width: 40%"></div>
+</div>
+</div>
+<!-- Metric Counters Row -->
+<div class="grid grid-cols-3 gap-2 py-3 px-3 bg-slate-50/80 rounded-xl border border-slate-100 text-center">
+<div>
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">CASOS</span>
+<span class="text-lg font-bold text-slate-800 leading-tight">47</span>
+</div>
+<div class="border-x border-slate-200/60">
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">CONFORMES</span>
+<span class="text-lg font-bold text-emerald-600 leading-tight">19</span>
+</div>
+<div>
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">NO CONF.</span>
+<span class="text-lg font-bold text-rose-600 leading-tight">28</span>
+</div>
+</div>
+<!-- Card Footer with Pill Buttons -->
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+<!-- Environment & Time -->
+<div class="flex items-center gap-2 text-slate-400">
+<span class="inline-flex items-center gap-1 font-medium text-slate-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      dev
+                    </span>
+<span>•</span>
+<span>hace 3 h</span>
+</div>
+<!-- Dark Action Pill (matching inspiration reference) -->
+<button class="px-3.5 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs tracking-wide shadow-sm hover:shadow transition flex items-center gap-1">
+<span>Ver</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Bancolombia (Visual enrichment section) -->
+<div class="space-y-4">
+<!-- Space Header Category -->
+<div class="flex items-center gap-2.5">
+<div class="w-3.5 h-3.5 rounded-md bg-indigo-600 shadow-sm shadow-indigo-500/30"></div>
+<h2 class="text-base font-bold text-slate-800 tracking-tight flex items-center gap-2">
+              Bancolombia
+              <span class="text-xs font-medium text-slate-400 tracking-normal">(1 proyecto)</span>
+</h2>
+</div>
+<!-- Cards Grid for Bancolombia -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+<!-- MODERN PROJECT CARD 3: APP PERSONAS -->
+<div class="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-all duration-200 overflow-hidden flex flex-col group">
+<!-- Solid Color Curved Header -->
+<div class="bg-indigo-600 text-white p-4 pb-5 rounded-t-2xl relative">
+<!-- Top metadata row in card header -->
+<div class="flex items-center justify-between text-xs mb-2.5">
+<span class="font-mono font-semibold tracking-wider bg-indigo-700/60 px-2.5 py-0.5 rounded-md border border-indigo-400/30 text-indigo-100">
+                    #BNC-109
+                  </span>
+<!-- Quick actions -->
+<div class="flex items-center gap-1 opacity-90 group-hover:opacity-100 transition">
+<button class="p-1 hover:bg-indigo-700/70 rounded-md transition" title="Miembros">
+<svg class="w-4 h-4 text-indigo-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="p-1 hover:bg-indigo-700/70 rounded-md transition" title="Editar">
+<svg class="w-4 h-4 text-indigo-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="p-1 hover:bg-indigo-700/70 rounded-md transition hover:text-red-200" title="Eliminar">
+<svg class="w-4 h-4 text-indigo-100" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Space tag & Big Title -->
+<p class="text-[11px] font-semibold text-indigo-200 tracking-wider uppercase">BANCOLOMBIA</p>
+<div class="flex items-center justify-between mt-0.5">
+<h3 class="text-xl font-bold tracking-tight text-white capitalize">Banca Digital</h3>
+<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-white">prod</span>
+</div>
+</div>
+<!-- Card Body Content -->
+<div class="p-5 flex-1 flex flex-col justify-between space-y-5 bg-white">
+<!-- Health Rate (Success Rate) -->
+<div>
+<div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+<span class="text-slate-500">Tasa de éxito</span>
+<span class="text-emerald-600 font-bold">92%</span>
+</div>
+<!-- Progress Bar with Green Gradient -->
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2 rounded-full transition-all duration-500" style="width: 92%"></div>
+</div>
+</div>
+<!-- Metric Counters Row -->
+<div class="grid grid-cols-3 gap-2 py-3 px-3 bg-slate-50/80 rounded-xl border border-slate-100 text-center">
+<div>
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">CASOS</span>
+<span class="text-lg font-bold text-slate-800 leading-tight">128</span>
+</div>
+<div class="border-x border-slate-200/60">
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">CONFORMES</span>
+<span class="text-lg font-bold text-emerald-600 leading-tight">118</span>
+</div>
+<div>
+<span class="block text-[10px] font-bold text-slate-400 tracking-wider uppercase">NO CONF.</span>
+<span class="text-lg font-bold text-rose-600 leading-tight">10</span>
+</div>
+</div>
+<!-- Card Footer with Pill Buttons -->
+<div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+<!-- Environment & Time -->
+<div class="flex items-center gap-2 text-slate-400">
+<span class="inline-flex items-center gap-1 font-medium text-slate-500">
+<span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                      prod
+                    </span>
+<span>•</span>
+<span>hace 10 min</span>
+</div>
+<!-- Dark Action Pill (matching inspiration reference) -->
+<button class="px-3.5 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs tracking-wide shadow-sm hover:shadow transition flex items-center gap-1">
+<span>Ver</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- END: MainContent -->
+</div>
+</body></html>
